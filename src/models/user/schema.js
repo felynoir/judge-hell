@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
+export const field = ['email', 'name', 'username', 'password'];
 export const schema = new Schema({
   email: {
     type: String,
