@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -12,8 +14,6 @@ var _morgan = _interopRequireDefault(require("morgan"));
 var _passport = _interopRequireDefault(require("../passport"));
 
 var _cors = _interopRequireDefault(require("cors"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var isTest = process.env.NODE_ENV === 'test';
 var isDev = process.env.NODE_ENV === 'development';

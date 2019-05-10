@@ -1,10 +1,10 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _index = _interopRequireDefault(require("./index"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 try {
   _mongoose["default"].connect(_index["default"].MONGO_URL);
