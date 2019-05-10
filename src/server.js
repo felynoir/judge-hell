@@ -12,6 +12,8 @@ middlewareConfig(app);
 
 app.use('/api', routes(config));
 
+app.get('/', (req, res) => res.send('Hello World!'));
+
 app.listen(8009, err => {
   if (err) {
     console.log(err);
