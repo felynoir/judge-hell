@@ -11,6 +11,7 @@ import { ExtractJwt, Strategy as JwtStategy } from 'passport-jwt';
 export class PassportStrategies {
   constructor(config, User) {
     this._User = User;
+    this._config = config;
     this.google = this.google.bind(this);
     this.local = this.local.bind(this);
     this.jwt = this.jwt.bind(this);
@@ -35,7 +36,7 @@ export class PassportStrategies {
   }
 
   jwt() {
-    const SECRET = this.config.secretKey;
+    const SECRET = this._config.SECRET_KEY;
     const jwtOptions = {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: SECRET,

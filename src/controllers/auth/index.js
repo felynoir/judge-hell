@@ -5,7 +5,7 @@ import signUp from './sign-up';
 
 export { signIn, signUp };
 
-export default (models, { config }) => {
+export default (models, config) => {
   const api = router();
 
   api.post(

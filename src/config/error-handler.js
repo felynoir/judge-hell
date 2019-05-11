@@ -1,4 +1,4 @@
-const errorHandler = (err, req, res, next) => {
+export default (err, req, res, next) => {
   const error = err;
   if (process.env.NODE_ENV !== 'production') {
     console.log(err);
@@ -17,6 +17,3 @@ const errorHandler = (err, req, res, next) => {
     message: error.message,
   });
 };
-
-module.exports = { errorHandler };
-ผ;

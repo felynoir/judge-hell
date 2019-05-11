@@ -1,13 +1,11 @@
 import express from 'express';
-
+import config, { errorHandler } from './config';
+import middlewareConfig from './config/middleware';
 import './config/database';
-
-import middlewareConfig, { errorHandler } from './config/middleware';
-import config from './config';
 import routes from './routes';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 1223;
 
 middlewareConfig(app);
 
@@ -26,3 +24,4 @@ app.listen(PORT, err => {
 });
 
 export default app;
+config;

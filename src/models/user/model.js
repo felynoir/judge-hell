@@ -43,7 +43,7 @@ schema.methods = {
   createToken() {
     return jwt.sign(
       { email: this.email, username: this.username },
-      config.secretKey,
+      config.SECRET_KEY,
     );
   },
 
