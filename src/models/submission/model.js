@@ -5,12 +5,7 @@ import config from '../../config';
 import { schema } from './schema';
 
 // Hash the user password on creation
-schema.pre('save', function(next) {
-  if (this.isModified('password')) {
-    this.password = this._hashPassword(this.password);
-  }
-  return next();
-});
+schema.pre('save', function(next) {});
 
 schema.methods = {};
 
