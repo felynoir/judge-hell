@@ -22,16 +22,14 @@ export class PassportStrategies {
   async local(email, password, done) {
     try {
       const user = await this._User.findOne({ email });
-
       if (!user) {
-        return done(null, false);
+        return done(new Error('Invalid Email or Password'), false);
       } else if (!user.authenticateUser(password)) {
-        return done(null, false);
+        return done(new Error('Invalid Email or Password'), false);
       }
-
       return done(null, user);
     } catch (e) {
-      return done(e, false);
+      return done(e, false, { message: 'eieie' });
     }
   }
 

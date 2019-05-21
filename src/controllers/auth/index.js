@@ -10,7 +10,9 @@ export default (models, config) => {
 
   api.post(
     '/signin',
-    passport.authenticate('local', { session: false }),
+    passport.authenticate('local', {
+      session: false,
+    }),
     signIn,
   );
 
