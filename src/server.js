@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5555;
 
 middlewareConfig(app);
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/', (req, res) => res.json('Hello World!'));
 
 app.use('/api', routes(config));
 

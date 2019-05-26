@@ -41,14 +41,16 @@ export class PassportStrategies {
     };
     const jwtAuth = new JwtStategy(jwtOptions, async (payload, done) => {
       try {
+        const { email } = payload;
         const user = await this._User.findOne({ email });
 
         if (!user) {
           return done(null, false);
         }
 
-        return done(null, user);
+        return done(null, { user, payload });
       } catch (e) {
+        console.log(e);
         return done(e, false);
       }
     });

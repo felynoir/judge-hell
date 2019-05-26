@@ -27,7 +27,7 @@ class Passport {
       ),
     );
 
-    this._passport.use(this._strategies.jwt);
+    this._passport.use(this._strategies.jwt());
   }
 
   init() {
