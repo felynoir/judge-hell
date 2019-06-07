@@ -5,7 +5,7 @@ import './config/database';
 import routes from './routes';
 
 const app = express();
-const PORT = process.env.PORT || 5555;
+const PORT = process.env.PORT || 5050;
 
 middlewareConfig(app);
 
