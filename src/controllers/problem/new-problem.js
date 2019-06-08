@@ -1,4 +1,8 @@
 import Bucket from '../../config/storage';
+import fs from 'fs';
+import { promisify } from 'util';
+
+const unlinkAsync = promisify(fs.unlink);
 
 export default ({ Problem }) => async (req, res, next) => {
   try {
@@ -18,8 +22,10 @@ export default ({ Problem }) => async (req, res, next) => {
         cacheControl: 'public, max-age=31536000',
       },
     };
+
     await Bucket.upload(req.file.path, options);
-    console.log('success');
+    await unlinkAsync(req.file.path);
+
     return res.status(200).json('problem');
   } catch (e) {
     next(e);
