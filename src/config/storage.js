@@ -4,8 +4,8 @@ if (process.env.NODE_ENV === 'production') {
   console.log(process.env.FIREBASE_PRIVATE_KEY);
   admin.initializeApp({
     credential: admin.credential.cert({
-      private_key: process.env.FIREBASE_PRIVATE_KEY,
-      client_email: process.env.FIREBASE_CLIENT_EMAIL,
+      private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      client_email: process.env.FIREBASE_CLIENT_EMAIL.replace(/\\n/g, '\n'),
     }),
     storageBucket: 'hell-grade.appspot.com',
   });
