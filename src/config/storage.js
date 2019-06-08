@@ -1,9 +1,21 @@
 import * as admin from 'firebase-admin';
 
-admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
-  storageBucket: 'hell-grade.appspot.com',
-});
+if (process.env.NODE_ENV === 'production') {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      private_key: process.env.FIREBASE_PRIVATE_KEY,
+      client_email: process.env.FIREBASE_CLIENT_EMAIL,
+    }),
+    storageBucket: 'hell-grade.appspot.com',
+  });
+} else {
+  var serviceAccount = require('./firebase-account.json');
+
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: 'hell-grade.appspot.com',
+  });
+}
 
 const bucket = admin.storage().bucket();
 
