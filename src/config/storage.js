@@ -1,7 +1,9 @@
 import * as admin from 'firebase-admin';
 
+var serviceAccount = require('../config/service-account.json');
+
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert(serviceAccount),
   storageBucket: 'hell-grade.appspot.com',
 });
 
