@@ -6,6 +6,8 @@ export default ({ Problem }) => async (req, res, next) => {
     const data = JSON.parse(req.body.data);
     const { problemName, time, memory } = data;
 
+    // const problem = await Problem.create(data)
+
     const options = {
       destination: `${problemName}/problem.pdf`,
       gzip: true,
