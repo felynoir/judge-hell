@@ -1,20 +1,9 @@
-import Bucket from '../../config/storage';
-import fs from 'fs';
-import { promisify } from 'util';
-
-const unlinkAsync = promisify(fs.unlink);
-
 export default ({ Problem }) => async (req, res, next) => {
   try {
     // TODO: save problem data in mongodb
     const data = JSON.parse(req.body.data);
     const { problemName, time, memory } = data;
-
-    console.log('new file', req.file);
-    // const problem = await Problem.create(data)
-    console.log('======================');
-    console.log(__dirname);
-    console.log(__filename);
+    const { filePdf, fileInput, fileOutput } = req.files;
     const options = {
       destination: `${problemName}/problem.pdf`,
       gzip: true,
@@ -23,10 +12,19 @@ export default ({ Problem }) => async (req, res, next) => {
       },
     };
 
-    await Bucket.upload(req.file.path, options);
-    await unlinkAsync(req.file.path);
+    await Bucket.upload(filePdf, options, async (err, file) => {
+      if (err) {
+        next(err);
+      }
+      const url = await file.getSignedUrl({
+        action: 'read',
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 356, // 1 years
+      });
+      console.log(url);
+      await unlinkAsync(req.file.path);
 
-    return res.status(200).json('problem');
+      return res.status(200).json('url');
+    });
   } catch (e) {
     next(e);
   }

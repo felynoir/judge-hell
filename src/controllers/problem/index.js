@@ -10,11 +10,16 @@ var storage = multer.diskStorage({
     cb(null, __dirname);
   },
   filename: (req, file, cb) => {
-    console.log(file);
     cb(null, file.originalname);
   },
 });
 var upload = multer({ storage });
+
+var problemUpload = upload.fields([
+  { name: 'filePdf', maxCount: 1 },
+  { name: 'fileInput', maxCount: 10 },
+  { name: 'fileOutput', maxCount: 10 },
+]);
 
 export default (models, config) => {
   const api = router();
@@ -25,8 +30,7 @@ export default (models, config) => {
     roleAuthorize('Admin'),
     getAll(models),
   );
-
-  api.post('/upload', upload.single('problemFile'), newProblem(models));
+  api.post('/upload', problemUpload, newProblem(models));
 
   return api;
 };
