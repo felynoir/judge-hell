@@ -1,8 +1,7 @@
 import * as admin from 'firebase-admin';
-import * as serviceAccount from './service-account';
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.applicationDefault(),
   storageBucket: 'hell-grade.appspot.com',
 });
 
