@@ -18,7 +18,7 @@ export default ({ Problem }) => async (req, res, next) => {
         cacheControl: 'public, max-age=31536000',
       },
     };
-    await Bucket.upload(req.file.path, options);
+    // await Bucket.upload(req.file.path, options);
     console.log('success');
     return res.status(200).json('problem');
   } catch (e) {
