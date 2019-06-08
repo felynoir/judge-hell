@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin';
 
 if (process.env.NODE_ENV === 'production') {
+  console.log(process.env.FIREBASE_PRIVATE_KEY);
   admin.initializeApp({
     credential: admin.credential.cert({
       private_key: process.env.FIREBASE_PRIVATE_KEY,
