@@ -1,4 +1,4 @@
-import Bucket from '../../config/storage';
+import Bucket, { bucketName } from '../../config/storage';
 import fs from 'fs';
 import { promisify } from 'util';
 const unlinkAsync = promisify(fs.unlink);
@@ -8,12 +8,11 @@ export default (path, options) => {
       if (err) {
         reject(err);
       }
-      const url = await file.getSignedUrl({
-        action: 'read',
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 356, // 1 years
-      });
+      await file.makePublic();
       await unlinkAsync(path);
-      resolve(url);
+      resolve(
+        `http://storage.googleapis.com/${bucketName}/${options.destination}`,
+      );
     });
   });
 };

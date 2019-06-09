@@ -6,8 +6,8 @@ export const schema = new Schema({
   id: Number,
   name: String,
   pdf: String,
+  input: [{ type: String }],
+  output: [{ type: String }],
   time: Number,
   memory: Number,
-  author: String,
-  desc: String,
 });

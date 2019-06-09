@@ -5,6 +5,7 @@ export default ({ Problem }) => async (req, res, next) => {
     const data = JSON.parse(req.body.data);
     const { problemName, time, memory } = data;
     const { filePdf, fileInput, fileOutput } = req.files;
+
     const options = {
       destination: `${problemName}/problem.pdf`,
       gzip: true,
@@ -40,11 +41,19 @@ export default ({ Problem }) => async (req, res, next) => {
         return bucketUpload(file.path, options);
       }),
     );
-
-    console.log(problemUrl);
+    console.log(typeof inputUrl);
     console.log(inputUrl);
-    console.log(outputUrl);
-    return res.status(200).json('problem');
+
+    const problem = await Problem.create({
+      name: problemName,
+      pdf: problemUrl,
+      input: inputUrl,
+      output: outputUrl,
+      time,
+      memory,
+    });
+
+    return res.status(200).json(problem);
   } catch (e) {
     next(e);
   }

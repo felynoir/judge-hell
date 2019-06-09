@@ -6,6 +6,6 @@ schema.pre('save', function(next) {});
 
 schema.methods = {};
 
-const User = mongoose.model('Submission', schema);
+const Submission = mongoose.model('Submission', schema);
 
-export default User;
+export default Submission;
