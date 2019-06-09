@@ -1,3 +1,4 @@
+import bucketUpload from '../services/bucket-upload';
 export default ({ Problem }) => async (req, res, next) => {
   try {
     // TODO: save problem data in mongodb
@@ -12,19 +13,38 @@ export default ({ Problem }) => async (req, res, next) => {
       },
     };
 
-    await Bucket.upload(filePdf, options, async (err, file) => {
-      if (err) {
-        next(err);
-      }
-      const url = await file.getSignedUrl({
-        action: 'read',
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 356, // 1 years
-      });
-      console.log(url);
-      await unlinkAsync(req.file.path);
+    const problemUrl = await bucketUpload(filePdf[0].path, options);
 
-      return res.status(200).json('url');
-    });
+    const inputUrl = await Promise.all(
+      fileInput.map(file => {
+        const options = {
+          destination: `${problemName}/${file.originalname}`,
+          gzip: true,
+          metadata: {
+            cacheControl: 'public, max-age=31536000',
+          },
+        };
+        return bucketUpload(file.path, options);
+      }),
+    );
+
+    const outputUrl = await Promise.all(
+      fileOutput.map(file => {
+        const options = {
+          destination: `${problemName}/${file.originalname}`,
+          gzip: true,
+          metadata: {
+            cacheControl: 'public, max-age=31536000',
+          },
+        };
+        return bucketUpload(file.path, options);
+      }),
+    );
+
+    console.log(problemUrl);
+    console.log(inputUrl);
+    console.log(outputUrl);
+    return res.status(200).json('problem');
   } catch (e) {
     next(e);
   }
