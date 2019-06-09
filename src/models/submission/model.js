@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { schema } from './schema';
 
 // Hash the user password on creation
-schema.pre('save', function(next) {});
+// schema.pre('save', function(next) {});
 
 schema.methods = {};
 
