@@ -1,7 +1,8 @@
 import { Router as router } from 'express';
 import passport from 'passport';
 import roleAuthorize from '../../utils/roleAuthorize';
-import getAll from './get-problem';
+import getAll from './get-all-problem';
+import getByname from './get-problem-by-name';
 import newProblem from './new-problem';
 import multer from 'multer';
 
@@ -29,6 +30,13 @@ export default (models, config) => {
     passport.authenticate('jwt', { session: false }),
     getAll(models),
   );
+
+  api.get(
+    '/:name',
+    passport.authenticate('jwt', { session: false }),
+    getByname(models),
+  );
+
   api.post(
     '/upload',
     passport.authenticate('jwt', { session: false }),
