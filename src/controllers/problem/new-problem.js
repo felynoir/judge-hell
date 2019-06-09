@@ -1,4 +1,4 @@
-import bucketUpload from '../services/bucket-upload';
+import { publicUpload, withSignedUrlUpload } from '../services/bucket-upload';
 export default ({ Problem }) => async (req, res, next) => {
   try {
     // TODO: save problem data in mongodb
@@ -14,7 +14,7 @@ export default ({ Problem }) => async (req, res, next) => {
       },
     };
 
-    const problemUrl = await bucketUpload(filePdf[0].path, options);
+    const problemUrl = await publicUpload(filePdf[0].path, options);
 
     const inputUrl = await Promise.all(
       fileInput.map(file => {
@@ -25,7 +25,11 @@ export default ({ Problem }) => async (req, res, next) => {
             cacheControl: 'public, max-age=31536000',
           },
         };
-        return bucketUpload(file.path, options);
+        const config = {
+          action: 'read',
+          expires: '03-17-2025',
+        };
+        return withSignedUrlUpload(file.path, options, config);
       }),
     );
 
@@ -38,11 +42,13 @@ export default ({ Problem }) => async (req, res, next) => {
             cacheControl: 'public, max-age=31536000',
           },
         };
-        return bucketUpload(file.path, options);
+        const config = {
+          action: 'read',
+          expires: '03-17-2025',
+        };
+        return withSignedUrlUpload(file.path, options, config);
       }),
     );
-    console.log(typeof inputUrl);
-    console.log(inputUrl);
 
     const problem = await Problem.create({
       name: problemName,
